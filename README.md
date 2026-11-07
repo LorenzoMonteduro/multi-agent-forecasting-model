@@ -295,4 +295,4 @@ tests/                     pytest suite
 
 ---
 
-Author: Lorenzo Monteduro. Code written with an AI coding assistant.
+Author: Lorenzo Monteduro.
