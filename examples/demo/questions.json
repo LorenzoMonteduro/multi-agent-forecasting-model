@@ -1,0 +1,24 @@
+{
+  "_comment": "FICTIONAL demo: an invented country and invented instruments, so the agent can run end to end offline.",
+  "briefing_topic": "The general election in the fictional Republic of Arcadia: control of the Lower House and the Upper House, and two closely watched districts.",
+  "binary": [
+    {"id": "LOWER", "short": "Lower House", "question": "Will the Green Party win a majority (101 of 200 seats) in the Arcadian Lower House?",
+     "yes_means": "the Green Party holds at least 101 Lower House seats when the official results are certified",
+     "notes": "Coalitions do not count: only seats won by the Green Party itself."},
+    {"id": "UPPER", "short": "Upper House", "question": "Will the Green Party control the Arcadian Upper House?",
+     "yes_means": "the Green Party holds at least 31 of 60 Upper House seats after the election"},
+    {"id": "D1", "question": "Will the Green Party candidate win District 1?",
+     "yes_means": "the Green Party candidate is declared the winner of District 1"},
+    {"id": "D2", "question": "Will the Green Party candidate win District 2?",
+     "yes_means": "the Green Party candidate is declared the winner of District 2",
+     "notes": "District 2 uses a ranked-choice count: the question is who wins after all rounds."}
+  ],
+  "scenario_questions": ["LOWER", "UPPER"],
+  "move_window": "from the close on the election day to the close on the next trading day",
+  "move_briefing_topic": "Arcadian equities, equity volatility and 10-year government bond yields around the election.",
+  "moves": [
+    {"id": "M1", "label": "Demo equity index", "instrument": "DEMO_EQUITY", "unit": "pct", "decimals": 2, "limit": 20},
+    {"id": "M2", "label": "Demo volatility index", "instrument": "DEMO_VOL", "unit": "points", "decimals": 2, "limit": 30},
+    {"id": "M3", "label": "Demo 10-year government bond yield", "instrument": "DEMO_10Y", "unit": "bp", "decimals": 1, "limit": 100}
+  ]
+}

@@ -1,0 +1,65 @@
+# Settings for the forecasting agent. Copy to config.toml and edit; config.toml is git-ignored.
+# Every key is optional: missing keys use the defaults in forecaster/settings.py.
+# The API key itself is NEVER written here: put it in .env (see .env.example).
+
+[provider]
+# Any endpoint that speaks the OpenAI chat-completions protocol (a model provider, a gateway, a local server).
+base_url = "https://api.openai.com/v1"
+api_key_env = "LLM_API_KEY"        # name of the environment variable holding the key
+timeout_s = 120
+transport_retries = 1
+send_temperature = true
+no_temperature_models = []         # ids or id prefixes of models that reject a temperature (some reasoning models)
+extra_body = {}                    # extra fields sent with every request, if your provider needs them
+
+[web_search]
+# How research calls search the web. Check your provider's documentation for the exact fields.
+#   mode = "none"        no search: research uses the models' own knowledge (much weaker for current events)
+#   mode = "extra_body"  merge the table below into the request
+#   mode = "suffix"      append `suffix` to the model id
+# Example for OpenRouter (a gateway to many model families): mode = "extra_body", extra_body = { plugins = [ { id = "web" } ] }
+mode = "none"
+extra_body = {}
+suffix = ""
+
+[models]
+# Model ids exactly as your provider names them. Use several model families for the forecasters.
+research = "your-fast-model-with-search"
+research_fallback = ""
+forecasters = ["model-family-1", "model-family-2", "model-family-3"]
+forecaster_fallback = ""
+move_forecasters = ["model-family-1", "model-family-2"]
+reviewer = "your-strong-model"
+reviewer_fallback = ""
+supervisor = "your-strongest-model"
+explainer = "your-strong-model"
+
+[method]
+context = "A forecasting exercise about a fictional general election in the Republic of Arcadia (demo)."
+research_rounds = 2          # gap-driven follow-up searches per research angle (0 = one pass)
+w_market_lo = 0.67           # market weight for the least-traded binary question
+w_market_hi = 0.80           # market weight for the most-traded binary question
+answer_lo = 1
+answer_hi = 99
+odds_max_age_h = 24
+explain_final = true
+cross_check_notes = "Equities and the volatility index usually move in opposite directions; government bond yields of different maturities usually move in the same direction."
+
+[moves]
+typical_window = 60
+typical_end = ""             # YYYY-MM-DD; empty = last date in the price history
+event_window_lag_bdays = 2
+past_events = ["2014-11-04", "2016-11-08", "2018-11-06", "2020-11-03", "2022-11-08", "2024-11-05"]
+scenario_coupling = "comonotone"
+
+[limits]
+workers = 8
+call_attempts = 2
+step_deadline_s = 300
+max_calls = 2000
+
+[paths]
+questions = "examples/demo/questions.json"
+market_prices = "examples/demo/market_prices.csv"
+price_history = "examples/demo/prices_daily.csv"
+runs = "runs"

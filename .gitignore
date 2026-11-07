@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.vscode/
+.idea/
+# secrets and local settings
+.env
+.env.*
+!.env.example
+config.toml
+# outputs
+runs/
